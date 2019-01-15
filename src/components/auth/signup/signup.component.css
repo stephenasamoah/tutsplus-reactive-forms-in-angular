@@ -1,0 +1,8 @@
+.login-wrapper {
+  background: none !important;
+  justify-content: center;
+}
+
+.login-wrapper .login:after {
+  height: 0 !important;
+}

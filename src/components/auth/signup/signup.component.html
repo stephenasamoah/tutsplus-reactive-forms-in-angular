@@ -1,0 +1,76 @@
+<section class="login-wrapper">
+  <form [formGroup]="signupForm" (ngSubmit)="createAccount()"
+        class="login">
+    <section class="title">
+      <h3 class="welcome">Clarity Sign-up Form</h3>
+    </section>
+
+    <fieldset [disabled]="loading">
+      <div class="login-group">
+        <span *ngIf="loading"
+          class="spinner mx-auto"></span>
+        <clr-select-container>
+          <select clrSelect name="company_type" [formControlName]="'company_type'">
+            <option value="null" disabled>Select company type</option>
+            <option value="local">Local Users</option>
+            <option value="admin">Administrator</option>
+          </select>
+          <clr-control-error *ngIf="company.invalid && company.touched">
+            You need to select a company type!
+          </clr-control-error>
+        </clr-select-container>
+
+        <clr-input-container>
+          <input formControlName="email"
+                 type="email" name="email" clrInput placeholder="E-mail address"/>
+          <clr-control-error *ngIf="email['invalid' && 'touched'] && email.errors?.required">
+            Email address is required
+          </clr-control-error>
+          <clr-control-error *ngIf="email['invalid' && 'touched'] && email.errors?.pattern">
+            Oops, the email address is invalid. Try to format it in:
+            example@email.com
+          </clr-control-error>
+        </clr-input-container>
+
+        <ng-container [formGroupName]="'password'">
+          <clr-password-container>
+            <input formControlName="pwd"
+                   type="password" name="password" clrPassword placeholder="Password"/>
+            <clr-control-error *ngIf="password['invalid' && 'touched']">
+              Password is required
+            </clr-control-error>
+          </clr-password-container>
+
+          <clr-password-container>
+            <input formControlName="confirmPwd"
+                   type="password" name="confirmPwd" clrPassword placeholder="Confirm password"/>
+            <clr-control-error *ngIf="password['invalid' && 'touched']">Re-type your password</clr-control-error>
+          </clr-password-container>
+        </ng-container>
+        <clr-checkbox-wrapper>
+          <label>I have read the <a href="#">Terms and Conditions</a></label>
+          <input formControlName="conditions"
+                 type="checkbox" name="conditions" clrCheckbox/>
+          <clr-control-error *ngIf="conditions['invalid' && 'touched']">You need to agree to the terms of service
+          </clr-control-error>
+        </clr-checkbox-wrapper>
+        <clr-control-helper>Form status: {{ signupForm.status | json}}</clr-control-helper>
+        <button [disabled]="signupForm.invalid"
+                type="submit" class="btn btn-primary">Create account
+        </button>
+      </div>
+    </fieldset>
+    <ng-container *ngIf="created">
+      <div class="card">
+        <div class="card-header">
+          Form values
+        </div>
+        <div class="card-block">
+          <div class="card-text">
+            <pre>{{ signupForm.value | json}}</pre>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </form>
+</section>
